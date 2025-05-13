@@ -53,10 +53,12 @@ class CrudController {
     }
     async update(req, res) {
         try {
-            const data = await CrudModel.updateOne({
-                isDeleted: false,
-                _id: req.body.id,
-            });
+            const data = await CrudModel.updateOne(
+                {
+                    _id: req.body.id,
+                },
+                req.body
+            );
             if (data) {
                 req.flash("success", "Update successfully!");
                 return res.redirect("/");
@@ -69,17 +71,23 @@ class CrudController {
     }
     async delete(req, res) {
         try {
-            const data = await CrudModel.updateOne({
-                isDeleted: true,
-                _id: req.body.id,
-            });
+            const data = await CrudModel.updateOne(
+                {
+                    _id: req.params.id,
+                },
+                {
+                    isDeleted: true,
+                }
+            );
             if (data) {
                 req.flash("success", "Delete successfully!");
                 return res.redirect("/");
             } else {
                 req.flash("error", "failed to delete!");
             }
-        } catch (error) {}
+        } catch (error) {
+            throw error
+        }
     }
 }
 module.exports = new CrudController();
