@@ -20,7 +20,7 @@ class CrudController {
             });
             if (data) {
                 req.flash("success", "Data save successfully!");
-                return res.redirect("/");
+                return res.redirect("/list");
             } else {
                 req.flash("error", "Data failed to create!");
             }
@@ -59,9 +59,11 @@ class CrudController {
                 },
                 req.body
             );
+            console.log(data);
+            
             if (data) {
                 req.flash("success", "Update successfully!");
-                return res.redirect("/");
+                return res.redirect("/list");
             } else {
                 req.flash("error", "failed to update!");
             }
